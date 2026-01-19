@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Happy Birthday 💖</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Floating hearts -->
+<div class="hearts-layer"></div>
+
+<!-- Confetti -->
+<div class="confetti-layer"></div>
+
+<div class="page page4">
+
+    <div class="final-card">
+        <h1>Happy Birthday 💖</h1>
+
+        <!-- Typewriter text -->
+        <p id="typewriter"></p>
+
+        <span class="signature">— With lots of love 💝</span>
+
+        <!-- Extra button -->
+        <button class="listen-more-btn" onclick="goMore()">
+            Aur shunna hain na meri pyari behena ko ? 💕
+        </button>
+    </div>
+
+</div>
+
+<script src="hearts.js"></script>
+
+<script>
+/* ===============================
+   TYPEWRITER EFFECT
+   =============================== */
+
+const message = `Haa... ki jeno ache aaj ??... ooo aaj to amr cutie Putul taar bday 😘💖....
+ Toh amr bon ta tale 20 years er hiye gelo .... badi ho gyi ho yaar😲... kintu amr jonno joto hi boro hoye jaa.. oi chotto cutie putul ta hi thakbi💌🩷 
+May this year bring you happiness,
+love, success, and countless beautiful moments to cherish forever 🌸
+dekh bhai .. sotti amr na mone pore oi din gulo 
+jokhon amader first time dekha hoyechilo... bhai sotti hi legechilo je YOU'RE A GUNDI 🤣... which you are actually... but tor moto gundi hole sob okay ...
+But Jagreeti on your special day, I would say that you are an amazing person with a heart of gold...
+Swarg ki apsara ho yaar tum .. devi ho ... aur tum ho ishi liye to jeevan jeevan hai 💖😊`;
+
+let i = 0;
+const speed = 35;
+const target = document.getElementById("typewriter");
+
+function typeWriter() {
+    if (i < message.length) {
+        target.innerHTML += message[i] === "\n" ? "<br>" : message[i];
+        i++;
+        setTimeout(typeWriter, speed);
+    }
+}
+typeWriter();
+
+/* ===============================
+   CONFETTI BURST
+   =============================== */
+
+const confettiLayer = document.querySelector(".confetti-layer");
+
+function createConfetti() {
+    for (let i = 0; i < 120; i++) {
+        const confetti = document.createElement("span");
+        confetti.classList.add("confetti");
+
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.animationDelay = Math.random() * 1.5 + "s";
+        confetti.style.backgroundColor =
+            ["#ff6f91", "#ffb6c1", "#ffc75f", "#f9f871"][Math.floor(Math.random() * 4)];
+
+        confettiLayer.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 5000);
+    }
+}
+createConfetti();
+
+/* ===============================
+   NEXT PAGE
+   =============================== */
+function goMore() {
+    window.location.href = "page5.html"; // you can change later
+}
+</script>
+
+</body>
+</html>

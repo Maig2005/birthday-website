@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Choose Your Surprise 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="page6">
+
+<div class="choice-wrapper">
+
+    <h1>To bolo madam… 🎀<br>Birthday hai aapka… konsa choose karengi aap? 💕</h1>
+
+    <div class="choice-buttons">
+        <button onclick="goVideo('video1.html')">To kya aapko mere man mein dekhna hai? 💌</button>
+        <button onclick="goVideo('video2.html')">Kya aap janna chati ho ki main agar tera bestie na hota to kya hota ? 👀</button>
+        <button onclick="goVideo('video3.html')">Kya aapko janna hai ki tere sang kaisa lagta hain?? 🌚</button>
+    </div>
+
+</div>
+
+<script>
+function goVideo(page){
+    document.body.classList.add("fade-out");
+    setTimeout(()=>{ window.location.href = page; }, 900);
+}
+</script>
+
+</body>
+</html>

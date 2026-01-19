@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Beautiful Moments 💖</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    if (window.innerWidth > 900) return;
+
+    const cards = document.querySelectorAll(".page3 .card");
+    const container = document.querySelector(".page3 .cards-container");
+
+    let current = 0;
+    let startX = 0;
+
+    function updateCards() {
+        cards.forEach((card, i) => {
+            card.classList.remove("active", "prev", "next");
+
+            if (i === current) card.classList.add("active");
+            else if (i === (current - 1 + cards.length) % cards.length) card.classList.add("prev");
+            else if (i === (current + 1) % cards.length) card.classList.add("next");
+        });
+    }
+
+    updateCards();
+    /* ===============================
+   DESKTOP MOUSE WHEEL SWIPE
+   =============================== */
+
+    
+
+    /* ===============================
+   DESKTOP MOUSE WHEEL SWIPE (FIXED)
+   =============================== */
+
+    if (window.innerWidth > 900) {
+
+        let wheelLock = false;
+
+        window.addEventListener("wheel", (e) => {
+
+            if (wheelLock) return;
+
+            wheelLock = true;
+
+            if (e.deltaY > 0) {
+                current = (current + 1) % cards.length;
+            } else {
+                current = (current - 1 + cards.length) % cards.length;
+            }
+
+            updateCards();  
+            
+            setTimeout(() => {
+                wheelLock = false;
+            }, 500);
+
+        }, { passive: true });
+    }
+
+
+
+    container.addEventListener("touchstart", e => {
+        startX = e.touches[0].clientX;
+    });
+
+    container.addEventListener("touchend", e => {
+        const diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) {
+            current = diff > 0
+                ? (current + 1) % cards.length
+                : (current - 1 + cards.length) % cards.length;
+            updateCards();
+        }
+    });
+});
+</script>
+
+<body>
+
+<!-- Floating hearts -->
+<div class="hearts-layer"></div>
+
+<div class="page page3">
+
+    <!-- Title -->
+    <h1 class="page-title">Some Beautiful Moments 💕</h1>
+
+    <!-- Cards -->
+    <div class="cards-container">
+
+        <div class="card">
+            <img src="images/pic1.jpeg" alt="Moment 1">
+            <div class="card-content">
+                <h2>That Smile ✨</h2>
+                <p>The one that makes everything feel lighter.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="images/pic2.jpeg" alt="Moment 2">
+            <div class="card-content">
+                <h2>Pure Joy 💫</h2>
+                <p>Moments that deserve to be paused forever.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="images/pic3.jpeg" alt="Moment 3">
+            <div class="card-content">
+                <h2>Her Aura 💖</h2>
+                <p>Effortless. Calm. Beautiful.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Next Button -->
+    <button class="next-btn" onclick="goNext()">Wanna move to the next? 💝</button>
+</div>
+
+<!-- Fullscreen Modal -->
+<div class="modal" id="cardModal">
+    <span class="modal-close" onclick="closeModal()">×</span>
+
+    <div class="modal-content">
+        <img id="modalImg" src="" alt="">
+        <div class="modal-text">
+            <h2 id="modalTitle"></h2>
+            <p id="modalDesc"></p>
+        </div>
+    </div>
+</div>
+
+<script src="hearts.js"></script>
+
+<script>
+/* ===============================
+   MOBILE MODAL + SWIPE
+   =============================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const cards = document.querySelectorAll(".page3 .card");
+    const modal = document.getElementById("cardModal");
+    const modalImg = document.getElementById("modalImg");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDesc = document.getElementById("modalDesc");
+
+    let currentIndex = 0;
+    let startX = 0;
+
+    cards.forEach((card, index) => {
+        card.addEventListener("click", () => {
+            if (window.innerWidth <= 768) {
+                openModal(index);
+            }
+        });
+    });
+
+    function openModal(index) {
+        const img = cards[index].querySelector("img");
+        const title = cards[index].querySelector("h2");
+        const desc = cards[index].querySelector("p");
+
+        modalImg.src = img.src;
+        modalTitle.innerText = title.innerText;
+        modalDesc.innerText = desc.innerText;
+
+        currentIndex = index;
+        modal.classList.add("active");
+    }
+
+    window.closeModal = function () {
+        modal.classList.remove("active");
+    };
+
+    modal.addEventListener("touchstart", e => {
+        startX = e.touches[0].clientX;
+    });
+
+    modal.addEventListener("touchend", e => {
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+
+        if (Math.abs(diff) > 50) {
+            diff > 0 ? nextCard() : prevCard();
+        }
+    });
+
+    function nextCard() {
+        currentIndex = (currentIndex + 1) % cards.length;
+        openModal(currentIndex);
+    }
+
+    function prevCard() {
+        currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+        openModal(currentIndex);
+    }
+});
+
+function goNext() {
+    window.location.href = "page4.html";
+}
+</script>
+
+</body>
+</html>
